@@ -1,40 +1,127 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TrackerSymptomsBot DARK PREMIUM</title>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;background:#0a0a0a;color:#fff;font-family:system-ui;padding:20px}
-.card{background:#151515;border:1px solid #2a2a2a;border-radius:16px;padding:20px;max-width:500px;margin:20px auto}
-h1{background:linear-gradient(90deg,#00ff88,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:28px;text-align:center}
-input,select,button{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#1e1e1e;color:#fff;font-size:16px}
-button{background:linear-gradient(90deg,#00ff88,#00ccff);color:#000;font-weight:bold;border:0;cursor:pointer}
-.cure{background:#1a2a1a;border-left:4px solid #00ff88;padding:12px;margin:10px 0;border-radius:8px}
-.pay{background:gold;color:#000;padding:12px;border-radius:10px;text-align:center;font-weight:bold;margin-top:15px;display:block;text-decoration:none}
-</style></head><body>
-<div class="card">
-<h1>🌑 TrackerSymptomsBot<br>DARK PREMIUM v2.0</h1>
-<p style="text-align:center;color:#888">OWN LINK: payhip.com/b/0ybhq - $9</p>
-<select id="sym"><option>Headache</option><option>High Blood Pressure</option><option>Diabetes</option><option>Bloating</option><option>Insomnia</option><option>Joint Pain</option><option>Anxiety</option><option>Cough</option><option>Fatigue</option><option>Skin Rash</option></select>
-<input id="note" placeholder="How severe? 1-10 + notes">
-<button onclick="getCure()">Get Natural Cure 🌿</button>
-<div id="out"></div>
-<a class="pay" href="https://payhip.com/b/0ybhq" target="_blank">💰 BUY FULL VERSION $9 - OWN LINK 0ybhq</a>
-<p style="text-align:center;color:#555;margin-top:15px;font-size:12px">© Thabo Peter Kalake | Forex Tutor Since 2008 | TrendTracker $250+ Creator</p>
+body{margin:0;background:#0a0a0a;color:white;font-family:Arial;padding-bottom:80px}
+.header{background:linear-gradient(135deg,#00FF7F,#00cc66);padding:15px;text-align:center;color:black}
+.header h1{margin:0;font-size:22px;font-weight:900}
+.pay-banner{background:gold;color:black;padding:12px;text-align:center;font-weight:900;position:sticky;top:0;z-index:100}
+.pay-banner a{color:black;text-decoration:none}
+.container{padding:15px}
+.card{background:#1a1a1a;border:1px solid #00FF7F;border-radius:12px;padding:15px;margin:15px 0}
+.btn{width:100%;padding:16px;border:none;border-radius:10px;font-weight:900;font-size:16px;margin:8px 0;cursor:pointer}
+.btn-green{background:#00FF7F;color:black}
+.btn-blue{background:#007BFF;color:white}
+.btn-gold{background:gold;color:black}
+.btn-black{background:black;color:#00FF7F;border:2px solid #00FF7F}
+input,select,textarea{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#222;color:white;box-sizing:border-box}
+.symptom-item{background:#222;padding:10px;border-radius:8px;margin:5px 0;border-left:4px solid #00FF7F}
+</style>
+</head>
+<body>
+
+<div class="pay-banner">
+<a href="https://payhip.com/b/0ybhq" target="_blank">💰 OWN LINK: BUY FULL - $9 → payhip.com/b/0ybhq</a>
 </div>
+
+<div class="header">
+<h1>🌿 TrackerSymptomsBot</h1>
+<p style="margin:5px 0">Track Symptoms + Get Natural Cures</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3 style="color:#00FF7F">💰 GET PREMIUM - OWN LINK</h3>
+<button class="btn btn-green" onclick="window.open('https://payhip.com/b/0ybhq','_blank')">💰 BUY FULL APP - $9 - payhip.com/b/0ybhq</button>
+<p style="font-size:12px;color:#aaa">One-time $9 - Own Payhip link: 0ybhq</p>
+</div>
+
+<div class="card">
+<h3>📝 Track New Symptom</h3>
+<select id="symptom">
+<option value="">Choose symptom...</option>
+<option>Headache</option>
+<option>High Blood Pressure</option>
+<option>Diabetes / High Sugar</option>
+<option>Bloating / Gas</option>
+<option>Insomnia / No Sleep</option>
+<option>Joint Pain / Arthritis</option>
+<option>Anxiety / Stress</option>
+<option>Cough / Cold</option>
+<option>Fatigue / Tired</option>
+<option>Skin Rash / Eczema</option>
+</select>
+<textarea id="notes" placeholder="How are you feeling?"></textarea>
+<button class="btn btn-black" onclick="trackSymptom()">✅ TRACK NOW + GET CURE</button>
+</div>
+
+<div class="card" id="cureResult" style="display:none">
+<h3 style="color:gold">🌿 Natural Cure For You:</h3>
+<p id="cureText"></p>
+<button class="btn btn-blue" onclick="window.open('https://payhip.com/b/0ybhq','_blank')">💰 GET 40 FULL RECIPES - $9 - OWN LINK</button>
+</div>
+
+<div class="card">
+<h3>📊 My History</h3>
+<div id="history">No symptoms tracked yet.</div>
+<button class="btn btn-black" onclick="clearHistory()">Clear History</button>
+</div>
+
+<div class="card">
+<h3>🔓 Unlock Premium</h3>
+<p>Get 40 natural cure recipes + offline access</p>
+<button class="btn btn-gold" onclick="window.open('https://payhip.com/b/0ybhq','_blank')">🔓 UNLOCK PREMIUM - $9 - payhip.com/b/0ybhq</button>
+<button class="btn btn-green" onclick="window.open('https://payhip.com/b/0ybhq','_blank')">📲 DOWNLOAD FULL APK - OWN LINK</button>
+</div>
+
+</div>
+
 <script>
-function getCure(){
-const s=document.getElementById('sym').value;
 const cures={
-"Headache":"Ginger + Turmeric Tea: Boil 1 tsp ginger + 1/2 tsp turmeric, 10min, add honey. Rest in dark room.",
-"High Blood Pressure":"Garlic + Hibiscus: 1 raw garlic clove morning + hibiscus tea evening. Low salt.",
-"Diabetes":"Bitter Melon + Cinnamon: Bitter melon juice + 1/2 tsp cinnamon before meals. Walk 20min.",
-"Bloating":"Peppermint + Ginger Walk: Peppermint tea + 10min walk after eating. No fizzy drinks.",
-"Insomnia":"Chamomile + Lavender: Chamomile tea 1hr before bed + lavender on pillow. No screen.",
-"Joint Pain":"Turmeric + Epsom Salt: Turmeric golden milk + Epsom salt soak 15min. Gentle stretch.",
-"Anxiety":"Ashwagandha + Breathing: Ashwagandha tea + 4-7-8 breathing (4sec in,7 hold,8 out).",
-"Cough":"Honey Lemon Ginger Steam: Honey+lemon+ginger tea + steam inhalation 10min.",
-"Fatigue":"Moringa + Beetroot Juice: Moringa powder morning + beetroot juice. Sleep 7-8hrs.",
-"Skin Rash":"Aloe Vera + Coconut Oil: Fresh aloe gel + cold coconut oil, 2x daily. Cotton clothes."
+"Headache":"Ginger Tea: Fresh ginger + honey + lemon. Boil 10 min. Drink 2x daily. Rest in dark room.",
+"High Blood Pressure":"Hibiscus Tea + Garlic: 1 cup hibiscus daily + 1 raw garlic clove. No salt. Walk 20 min.",
+"Diabetes / High Sugar":"Cinnamon + Fenugreek: 1 tsp cinnamon in warm water morning. Fenugreek seeds soaked overnight.",
+"Bloating / Gas":"Fennel + Peppermint: Chew fennel seeds after meals. Peppermint tea. No carbonated drinks.",
+"Insomnia / No Sleep":"Valerian + Chamomile: Chamomile tea 1 hour before bed. No phone 1 hour before sleep.",
+"Joint Pain / Arthritis":"Turmeric + Epsom Salt: Turmeric milk daily. Epsom salt bath 15 min. Ginger compress.",
+"Anxiety / Stress":"Lavender + Deep Breathing: Lavender oil inhale. 4-7-8 breathing. 10 min meditation.",
+"Cough / Cold":"Honey + Turmeric + Ginger: 1 tbsp honey + turmeric + ginger juice. Steam inhalation.",
+"Fatigue / Tired":"Beetroot + Dates: Beet juice morning. 3 dates daily. 8 hours sleep. Hydrate.",
+"Skin Rash / Eczema":"Aloe Vera + Coconut Oil: Pure aloe gel 2x daily. Cold coconut oil. No harsh soap."
 };
-document.getElementById('out').innerHTML=`<div class=cure><b>${s}:</b><br>${cures[s]}</div><div style=color:#00ff88;margin-top:10px>✅ Saved to History (Offline)</div>`;
+
+function trackSymptom(){
+const s=document.getElementById('symptom').value;
+const n=document.getElementById('notes').value;
+if(!s){alert('Choose symptom!');return;}
+const cure=cures[s]||"Drink water, rest, eat natural foods.";
+document.getElementById('cureText').innerText=s+" → "+cure;
+document.getElementById('cureResult').style.display='block';
+
+let h=JSON.parse(localStorage.getItem('symptoms')||'[]');
+h.unshift({date:new Date().toLocaleString(),symptom:s,notes:n});
+localStorage.setItem('symptoms',JSON.stringify(h));
+showHistory();
 }
-</script></body></html>
+
+function showHistory(){
+let h=JSON.parse(localStorage.getItem('symptoms')||'[]');
+if(h.length==0){document.getElementById('history').innerHTML='No symptoms tracked yet.';return;}
+let html='';
+h.forEach(item=>{
+html+=`<div class="symptom-item"><b>${item.date}</b><br>${item.symptom} - ${item.notes||''}</div>`;
+});
+document.getElementById('history').innerHTML=html;
+}
+
+function clearHistory(){
+if(confirm('Clear all history?')){localStorage.removeItem('symptoms');showHistory();}
+}
+
+showHistory();
+</script>
+
+</body>
+</html>
